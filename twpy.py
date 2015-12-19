@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-""" machine learning twitter timeline.
 
-Usage: 
-	python twpy.py -h
-	python twpy.py --config
-	python twpy.py --train
-	python twpy.py
-options:
-	-h, --help	show this help message and exit
-	--config	liketw cli configure setting
-	--train		liketw training
+"""Usage: twpy.py [-hcts]
+twpy.py --config
+twpy.py --train
+twpy.py --start
+Options:
+ -h --help
+ -c --config
+ -t --train
+ -s --start
+
 """
 
 from docopt import docopt
@@ -20,17 +20,18 @@ import yaml
 
 if __name__ == "__main__":
 	args = docopt(__doc__)
+	print("samples:"+str(args["--config"]))
 	if args["--config"]:
 #		mc = makeConfig.makeConfig()
-		print "input mongodb connect IP"
+		print "input mongodb connect IP:"
 		mdb = raw_input()
-		print "input twitter api Consumer Key"
+		print "input twitter api Consumer Key:"
 		ck = raw_input()
-		print "input twitter api Consumer Secret"
+		print "input twitter api Consumer Secret:"
 		cs = raw_input()
-		print "input twitter api Access Token"
+		print "input twitter api Access Token:"
 		at = raw_input()
-		print "input twitter api Access Token Secret"
+		print "input twitter api Access Token Secret:"
 		ats = raw_inpit()
 #		mc.Create(mdb,ck,cs,at,ats)
 	elif args["--train"]:
