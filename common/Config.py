@@ -4,16 +4,21 @@
 import yaml
 from os import path
 
-class Config():
+"""
+ Configure Class Singleton
+"""
+class Config(object):
 	mongoIP = ""
 	mongoPort = 0
 	ConsumerKey = ""
 	ConsumerSecret = ""
 	AccessToken = ""
 	AccessTokenSecret = ""
-	def __init__(self):
-		self.loadConfig()
-
+	_instance = None
+	def __new__(cls, *a, **kw):
+		if cls._instance is None:
+			cls._instance = object.__new__(cls, *a, **kw)
+		return cls._instance
 	def loadConfig(self):
 		f = open(path.dirname(path.abspath(__file__)) + "/../config/config.yaml").read()
 		f = f.decode('utf8')
@@ -32,7 +37,8 @@ class Config():
 			ck = str(self.getCK()),
 			cs = str(self.getCS()),
 			at = str(self.getAT()),
-			ats = str(self.getATS())
+			ats = str(self.getATS()),
+			mongo_use = false
 		)
 		with open(path.dirname(path.abspath(__file__))+"/../config/config.yaml",'w') as outfile:
 			outfile.write(yaml.dump(data,default_flow_style=True))

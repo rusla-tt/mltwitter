@@ -19,10 +19,13 @@ import yaml
 import common.Config as Config
 
 if __name__ == "__main__":
+	mc = Config.Config()
+	try:
+		mc.loadConfig()
+	except:
+		print("Configure File Not Found")
 	args = docopt(__doc__)
-	print("samples:"+str(args["--config"]))
 	if args["--config"]:
-		mc = Config.Config()
 		print "input mongodb connect IP:"
 		mdb = raw_input()
 		mc.setMongoDB(mdb)
