@@ -17,16 +17,16 @@ class TimeLine(object):
 
 	def getLikeKeyTweet(self,keyword,max_id=-1,since_id=-1):
 		url = "https://api.twitter.com/1.1/search/tweets.json"
-		params = {
+		query = {
 				"q":keyword,
 				"count":'100'
 			}
-		twitter = OAuth1Session(self.ck,self.cs,self.at,self.ats)
+		twitterAccess = OAuth1Session(self.ck,self.cs,self.at,self.ats)
 		if max_id != -1:
-			params['max_id'] = max_id
+			query['max_id'] = max_id
 		if since_id != -1:
-			params['since_id'] = since_id
-		req = twitter.get(url,params=params)
+			query['since_id'] = since_id
+		req = twitterAccess.get(url,params=query)
 		if req.status_code == 200:
 			return_result = {}
 			tw = []
@@ -35,11 +35,6 @@ class TimeLine(object):
 			return_result["status"] = timeline['statuses']
 			return_result["limit"] = req.headers['x-rate-limit-remaining'] if 'x-rate-limit-remaining' in request.headers else 0
 			return_result["reset"] = req.headers['x-rate-limit-reset'] if 'x-rate-limit-reset' in request.headers else 0
-			return_result["reset_time"] = datetime.datetime.fromtimestamp(
-					float(
-						return_result["reset"]
-						)
-					)
 			return_result["result"] = True
 			for txt in timeline:
 				tw.append(text["txt"])
@@ -49,15 +44,15 @@ class TimeLine(object):
 			print("ERROR: %d" % req.status_code)
 			return {"result":False, "status_code":req.status_code}
 
-	def getTimeLine(self,max_id,since_id):
+	def getTimeLine(self,max_id=-1,since_id=-1):
 		url = "htpps://api.twitter.com/1.1/statuses/home_timeline.json"
-		params = {"count":100}
+		query = {"count":100}
 		if max_id != -1:
-			params["max_id"] = max_id
+			query["max_id"] = max_id
 		if since_id != -1:
-			params["since_id"] = since_id
-		twitter = OAuth1Session(self.ck,self.cs,self.at,self.ats)
-		req = twitter.get(url,params)
+			query["since_id"] = since_id
+		twitterAccess = OAuth1Session(self.ck,self.cs,self.at,self.ats)
+		req = twitterAccess.get(url,params=query)
 		if req.status_code == 200:
 			return_result = {}
 			tw = []
