@@ -4,7 +4,6 @@
 import common.Config as Config
 from requests_oauthlib import OAuth1Session
 import json
-import datetime
 
 class TimeLine(object):
 
@@ -45,7 +44,8 @@ class TimeLine(object):
 			return {"result":False, "status_code":req.status_code}
 
 	def getTimeLine(self,max_id=-1,since_id=-1):
-		url = "htpps://api.twitter.com/1.1/statuses/home_timeline.json"
+		min_id = 0
+		url = "htpps://api.twitter.com/1.1/statuses/public_timeline.json"
 		query = {"count":100}
 		if max_id != -1:
 			query["max_id"] = max_id
@@ -62,6 +62,10 @@ class TimeLine(object):
 			return_result["result"] = True
 			for txt in timeline:
 				tw.append(txt["text"])
+			for minid in timeline:
+				if tmp_id > minid:
+					tmp_id = minid -1
+			return_result["max_id"] = tmp_id
 			return_result["txt"] = tw
 			return return_result
 		else:
