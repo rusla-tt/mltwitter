@@ -17,9 +17,12 @@ Options:
 from docopt import docopt
 import yaml
 import common.Config as Config
+import body.Main as Main
+
 
 if __name__ == "__main__":
 	mc = Config.Config()
+	main = Main.Main()
 	try:
 		mc.loadConfig()
 	except:
@@ -45,7 +48,11 @@ if __name__ == "__main__":
 		ats = raw_inpit()
 		mc.setATS(ats)
 		mc.writeConfig()
+		print "default db is csv file. If you want to use the mongodb, please change the settings file"
 	elif args["--train"]:
-		print("train")
+		print "input like keyword for examples: foo,bar"
+		likes = raw_input()
+		main.train(likes)
 	else:
-		print("main")
+		print "likes tweet start!"
+		main.likesTweet()
