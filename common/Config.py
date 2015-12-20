@@ -10,6 +10,7 @@ from os import path
 class Config(object):
 	mongoIP = ""
 	mongoPort = 0
+	mongo_use = False
 	ConsumerKey = ""
 	ConsumerSecret = ""
 	AccessToken = ""
@@ -29,6 +30,7 @@ class Config(object):
 		self.setCS(str(c["cs"]))
 		self.setAT(str(c["at"]))
 		self.setATS(str(c["ats"]))
+		self.setUseMongo(c["mongo_use"])
 
 	def writeConfig(self):
 		data = dict(
@@ -38,31 +40,35 @@ class Config(object):
 			cs = str(self.getCS()),
 			at = str(self.getAT()),
 			ats = str(self.getATS()),
-			mongo_use = false
+			mongo_use = False
 		)
 		with open(path.dirname(path.abspath(__file__))+"/../config/config.yaml",'w') as outfile:
 			outfile.write(yaml.dump(data,default_flow_style=True))
-	def getMongoDB():
+	def getMongoDB(self):
 		return self.mongoIP
-	def getMongoPort():
+	def getMongoPort(self):
 		return self.mongoPort
-	def getCK():
+	def getUseMongo(self):
+		return self.mongo_use
+	def getCK(self):
 		return self.ConsumerKey
-	def getCS():
+	def getCS(self):
 		return self.ConsumerSecret
-	def getAT():
+	def getAT(self):
 		return self.AccessToken
-	def getATS():
+	def getATS(self):
 		return self.AccessTokenSecret
-	def setMongoDB(loadmongoip):
+	def setMongoDB(self,loadmongoip):
 		self.mongoIP = loadmongoip
-	def setMongoPort(loadPort):
+	def setMongoPort(self,loadPort):
 		self.mongoPort = loadPort
-	def setCK(loadCosumerKey):
+	def setUseMongo(self,loadUseMongo):
+		self.mongo_use = loadUseMongo
+	def setCK(self,loadCosumerKey):
 		self.ConsumerKey = loadConsumerKey
-	def setCS(loadConsumerSecret):
+	def setCS(self,loadConsumerSecret):
 		self.ConsumerSecret = loadConsumerSecret
-	def setAT(loadAccessToken):
+	def setAT(self,loadAccessToken):
 		self.AccessToken = loadAccessToken
-	def setATS(loadAccessTokenSecret):
+	def setATS(self,loadAccessTokenSecret):
 		self.AccessTokenSecret = loadAccessTokenSecret

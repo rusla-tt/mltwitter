@@ -17,7 +17,7 @@ class Tfidf(onject):
 		tfidf = TF * log( N / DF )
 		return tfidf
 
-	def TfidfMain(self,docs):
+	def TfidfMain(self,docs,data,N):
 		tf = {}
 		df = {}
 		for i,text in docs:
@@ -35,8 +35,21 @@ class Tfidf(onject):
 					df[word] = df[word] + 1
 				except KeyError:
 					df[word] = 1
+		for d in data:
+			df_list = []
+			words = wakachi.Wakachi().main(d)
+			for word in words:
+				try:
+					if word in df_list:
+						continue
+					df[word] = df[word] + 1
+				except KeyError:
+					df[word] = 1
 		tfidf = {}
+		keys = []
 		for key,value in getTopKeywords(tf,100):
 			tfidf[key] = calcTFIDF(N,tf[key],df[key])
-		return tfidf
+		for k,v in getTopKeywords(tfidf,100):
+			keys.append(k)
+		return keys
 
