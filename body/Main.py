@@ -71,12 +71,26 @@ class Main(object):
 		print "reloaded time two min"
 		f = open(path.dirname(path.abspath(__file__))+"/../csv/likeskey.csv",'rb')
 		dataRead = csv.reader(f)
+		allf = open(path.dirname(path.abspath(__file__))+"/../csv/all.csv","rb")
+		alldata = csv.reader(allf)
+		teacher = {}
+		for value in alldata:
+			teacher[value[0]] = value[1]
+		for k,v in teacher:
+			self.bayes.train(k,v)
 		keyword = []
 		for row in dataReader:
 			keyword.append(row)
 		while(True):
-			get = self.twitter.searchTweetMain(keywordlist=ramdom.sample(keyword,5))
-			display = random.sample(get,100)
+			samples = []
+			get = self.twitter.searchTweetMain(keywordlist=ramdom.sample(keyword,10))
+			for doc in get:
+				if self.bayes.classifier(doc) == "like":
+					samples.append(doc)
+			if len(samples) > 100:
+				display = random.sample(get,100)
+			else:
+				display = get
 			for cons in display:
 				print str(cons)
 			time.sleep(120)
