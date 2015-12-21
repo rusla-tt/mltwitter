@@ -3,7 +3,7 @@
 
 import wakachi
 
-class Getwords(object):
+class GetWords(object):
 	def getwords(self,doc):
 		wakachi_obj = wakachi.Wakachi()
 		words = [s.lower() for s in wakachi_obj.main(doc)]

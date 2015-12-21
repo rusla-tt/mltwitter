@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-import TimeLine
+import timeline
 
 class Tw(object):
 	def searchTweetMain(self,keywordlist,lim=2,sleeptime=20):
-		tw = TimeLine()
+		tw = timeline.TimeLine()
 		tl = []
 		for key in keywordlist:
 			sid = -1

@@ -4,7 +4,7 @@
 import re
 from math import log
 
-class Tfidf(onject):
+class Tfidf(object):
 	"""
 	検索用のキーワードを取得する(特徴語の抽出)
 	最終的にランダム使って５キーワードくらいにすればいいか？

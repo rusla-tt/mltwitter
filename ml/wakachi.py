@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-import Mecab
+import MeCab
 
 MECAB_MODE = '-Owakachi -d /usr/local/lib/mecab/dic/mecab-ipadic-neologd/'
 PARSE_TEXT_ENCODING = 'utf-8'

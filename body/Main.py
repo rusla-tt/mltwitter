@@ -5,7 +5,7 @@ import re
 import twitter.tw as tw
 import ml.Tfidf as TFIDF
 import ml.Bayes as Bayes
-import config.Config as Config
+import common.Config as Config
 import csv
 from os import path
 
@@ -47,12 +47,13 @@ class Main(object):
 				count = count + 1
 			print "please likes tweet No. input:"
 			likeno = raw_input()
+			nolist = likeno.split(",")
 			likedoc = []
-			for int(no) in likeno.split(","):
-				likedoc.append(displist[no])
-				displist[no] = ""
-			for int(no) in likeno.split(","):
-				del displist[no]
+			for no in nolist:
+				likedoc.append(displist[int(no)])
+				displist[int(no)] = ""
+			for no in nolist:
+				del displist[int(no)]
 			for doc in likedoc:
 				tmp_csv = []
 				tmp_csv.append("like")
