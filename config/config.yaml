@@ -1,0 +1,7 @@
+mongoip: 127.0.0.1
+mongoport: 27081
+ck: xxxxxxxxxxxxx
+cs: xxxxxxxxxxxxx
+at: xxxxxxxxxxxx
+ats: xxxxxxxxxxxx
+mongo_use: False

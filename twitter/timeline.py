@@ -45,7 +45,7 @@ class TimeLine(object):
 
 	def getTimeLine(self,max_id=-1,since_id=-1):
 		min_id = 0
-		url = "htpps://api.twitter.com/1.1/statuses/public_timeline.json"
+		url = "https://api.twitter.com/1.1/statuses/home_timeline.json"
 		query = {"count":100}
 		if max_id != -1:
 			query["max_id"] = max_id

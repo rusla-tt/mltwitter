@@ -46,12 +46,12 @@ class Tw(object):
 		return result
 
 	def homeTweetMain(self,loop=2):
-		tw = TimeLine()
+		tw = timeline.TimeLine()
 		tl = []
 		result = []
 		max_id = -1
 		for i in range(0, loop):
-			res = tw.getTimeLine(max_id=mid)
+			res = tw.getTimeLine(max_id=max_id)
 			tl.append(res["txt"])
 			max_id = int(res["max_id"])
 		for group in tl:

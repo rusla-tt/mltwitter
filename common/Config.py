@@ -64,7 +64,7 @@ class Config(object):
 		self.mongoPort = loadPort
 	def setUseMongo(self,loadUseMongo):
 		self.mongo_use = loadUseMongo
-	def setCK(self,loadCosumerKey):
+	def setCK(self,loadConsumerKey):
 		self.ConsumerKey = loadConsumerKey
 	def setCS(self,loadConsumerSecret):
 		self.ConsumerSecret = loadConsumerSecret

@@ -8,6 +8,7 @@ import ml.Bayes as Bayes
 import common.Config as Config
 import csv
 from os import path
+import random
 
 class Main(object):
 	def __init__(self):
@@ -18,6 +19,9 @@ class Main(object):
 		self.conf.loadConfig()
 
 	def train(self,likes):
+		"""
+		 配列切ってメソッドで管理しても良いかも？
+		"""
 		f = open(path.dirname(path.abspath(__file__))+"/../csv/interest.csv","ab")
 		intcsv = csv.writer(f)
 		keyf = open(path.dirname(path.abspath(__file__))+"/../csv/likeskey.csv","ab")
@@ -26,8 +30,8 @@ class Main(object):
 		alldoc = csv.writer(allf)
 		training_list = []
 		likeword = likes.split(",")
-		training_list.append(twitter.homeTweetMain())
-		training_list.append(twitter.searchTweetMain(keywordlist=likeword))
+		training_list.append(self.twitter.homeTweetMain())
+		training_list.append(self.twitter.searchTweetMain(keywordlist=likeword))
 		sampling = []
 		for group in trainig_list:
 			for tex in group:
@@ -35,7 +39,7 @@ class Main(object):
 		if self.conf.getUseMongo():
 			pass
 		else:
-			displist = ramdom.sample(sampling,200)
+			displist = random.sample(sampling,200)
 			for teacher in displist:
 				alldoc.writerow(teacher)
 			allf.close()
@@ -68,23 +72,28 @@ class Main(object):
 			keydoc.writerow(getkey)
 			print "Training OK"
 
-	def likeTweet(self):
+	def likesTweet(self):
 		print "reloaded time two min"
+		"""
+		 method切って配列で管理してもいいかも？
+		"""
 		f = open(path.dirname(path.abspath(__file__))+"/../csv/likeskey.csv",'rb')
 		dataRead = csv.reader(f)
 		allf = open(path.dirname(path.abspath(__file__))+"/../csv/all.csv","rb")
 		alldata = csv.reader(allf)
+		inst = open(path.dirname(path.abspath(__file__))+"/../csv/interest.csv","rb")
+		instdata = csv.reader(inst)
 		teacher = {}
-		for value in alldata:
+		for value in instdata:
 			teacher[value[0]] = value[1]
 		for k,v in teacher:
 			self.bayes.train(k,v)
 		keyword = []
-		for row in dataReader:
+		for row in dataRead:
 			keyword.append(row)
 		while(True):
 			samples = []
-			get = self.twitter.searchTweetMain(keywordlist=ramdom.sample(keyword,10))
+			get = self.twitter.searchTweetMain(keywordlist=random.sample(keyword,10))
 			for doc in get:
 				if self.bayes.classifier(doc) == "like":
 					samples.append(doc)
