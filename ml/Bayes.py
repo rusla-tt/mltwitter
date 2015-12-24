@@ -22,12 +22,12 @@ class Bayes(object):
 		self.wordcount[cat].setdefault(word,0)
 		self.wordcount[cat][word] += 1
 		self.vocabularies.add(word)
-	
-	def __catcountup(self,up):
+
+	def __catcountup(self,cat):
 		self.catcount.setdefault(cat,0)
 		self.catcount[cat] += 1
 
-	def train(self,doc,car):
+	def train(self,doc,cat):
 		word = self._getwords.getwords(doc)
 		for w in word:
 			self.__wordcountup(w,cat)
@@ -37,12 +37,13 @@ class Bayes(object):
 		best = None
 		max = -sys.maxint
 		word = self._getwords.getwords(doc)
-		for set in self.catcount.keys():
+		for cat in self.catcount.keys():
 			prob = self.score(word,cat)
 			if prob > max:
 				max = prob
-				best = car
+				best = cat
 		return best
+
 	def score(self,word,cat):
 		score = math.log(self.__prioprob(cat))
 		for w in word:
